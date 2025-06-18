@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Книга</title>
+</head>
+<body>
+<p th:text="${book.name + ', ' + book.author + ', ' + book.year}">Данные по книге</p>
+<!-- Если книга занята -->
+<div th:if="${assignedPerson != null}">
+    <p>📚 Книга сейчас у: <span th:text="${assignedPerson.fullName}"></span></p>
+    <form th:action="@{/books/{id}/release(id=${book.idBook})}" method="post">
+        <input type="submit" value="Освободить книгу">
+    </form>
+</div>
+
+<!-- Если книга свободна -->
+<div th:if="${assignedPerson == null}">
+    <p>Это книга свободна. Кому назначить ее?</p>
+    <form method="POST" th:action="@{/books/{id}/addPerson(id=${idBook})}">
+        <label for="person">Выберите человека</label>
+        <select name="idPerson" id="person">
+            <option th:each="p : ${people}"
+                    th:value="${p.idPerson}"
+                    th:text="${p.fullName}"></option>
+        </select>
+        <input type="submit" value="Назначить">
+    </form>
+</div>
+
+<br/>
+<hr/>
+<form th:action="@{/books/{id}/edit(id=${book.idBook})}">
+    <input type="submit" value="Редактировать!">
+</form>
+<form th:method="DELETE" th:action="@{/books/{id}/delete(id=${book.idBook})}">
+    <input type="submit" value="Delete"/>
+</form>
+</body>
+</html>

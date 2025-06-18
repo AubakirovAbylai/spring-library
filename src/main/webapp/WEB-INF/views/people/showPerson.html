@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Человек</title>
+</head>
+<body>
+<p th:text="${person.fullName + ', ' + person.yearOfBirth}">Полное имя и год рождение</p>
+
+<h3>Книги, которые на руках:</h3>
+
+<!-- если книг нет -->
+<div th:if="${#lists.isEmpty(books)}">
+    <p>📭 У этого человека нет книг.</p>
+</div>
+
+<!-- если книги есть -->
+<ul th:if="${!#lists.isEmpty(books)}">
+    <li th:each="book : ${books}">
+        <a th:href="@{/books/{id}(id=${book.idBook})}" th:text="${book.name}">Название</a>
+        <span th:text="${book.author}"></span>,
+        <span th:text="${book.year}"></span>
+    </li>
+</ul>
+
+<br/>
+<a href="/people">⬅ Назад к списку людей</a>
+
+<hr/>
+<form th:action="@{/people/{id}/edit(id=${person.idPerson})}">
+    <input type="submit" value="Редактировать!"/>
+</form>
+<form th:method="DELETE" th:action="@{/people/{id}/delete(id=${person.idPerson})}">
+    <input type="submit" value="Удалить"/>
+</form>
+
+</body>
+</html>
