@@ -9,7 +9,7 @@
 <!-- Если книга занята -->
 <div th:if="${assignedPerson != null}">
     <p>📚 Книга сейчас у: <span th:text="${assignedPerson.fullName}"></span></p>
-    <form th:action="@{/books/{id}/release(id=${book.idBook})}" method="post">
+    <form th:action="@{/books/{id}/release(id=${book.id})}" method="post">
         <input type="submit" value="Освободить книгу">
     </form>
 </div>
@@ -17,11 +17,11 @@
 <!-- Если книга свободна -->
 <div th:if="${assignedPerson == null}">
     <p>Это книга свободна. Кому назначить ее?</p>
-    <form method="POST" th:action="@{/books/{id}/addPerson(id=${idBook})}">
+    <form method="POST" th:action="@{/books/{id}/addPerson(id=${book.id})}">
         <label for="person">Выберите человека</label>
         <select name="idPerson" id="person">
             <option th:each="p : ${people}"
-                    th:value="${p.idPerson}"
+                    th:value="${p.id}"
                     th:text="${p.fullName}"></option>
         </select>
         <input type="submit" value="Назначить">

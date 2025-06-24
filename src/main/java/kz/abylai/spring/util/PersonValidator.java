@@ -2,6 +2,8 @@ package kz.abylai.spring.util;
 
 import kz.abylai.spring.dao.PersonDAO;
 import kz.abylai.spring.models.Person;
+import kz.abylai.spring.repositories.PersonRepository;
+import kz.abylai.spring.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -9,11 +11,11 @@ import org.springframework.validation.Validator;
 
 @Component
 public class PersonValidator implements Validator {
-    private PersonDAO personDAO;
+    private PersonService personService;
 
     @Autowired
-    public PersonValidator(PersonDAO personDAO) {
-        this.personDAO = personDAO;
+    public PersonValidator(PersonService personService) {
+        this.personService = personService;
     }
 
     @Override
@@ -24,7 +26,7 @@ public class PersonValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Person person = (Person) target;
-        if(personDAO.getPerson(person.getFullName()).isPresent()){
+        if(personService.getPerson(person.getFullName()).isPresent()){
             errors.rejectValue("fullName", "", "Такое имя уже существует в нашей базе");
         }
     }

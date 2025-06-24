@@ -1,21 +1,41 @@
 package kz.abylai.spring.models;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotEmpty;
 
-public class Book {
-    private int idBook;
-    private Integer idPerson;
-    private Person person;
+import java.util.Date;
 
+@Entity
+@Table(name = "Book")
+public class Book {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "id_person", referencedColumnName = "id")
+    private Person owner;
+
+    @Column(name = "name")
     @NotEmpty
     private String name;
 
+    @Column(name = "author")
     @NotEmpty
     private String author;
 
+    @Column(name = "year")
     @Max(value = 2025, message = "Пожалуйста введите корректные данные")
     private int year;
+
+    @Column(name = "person_take_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date personTakeDate;
+
+    @Transient
+    private boolean expired;
 
     public Book(String name, String author, int year) {
         this.name = name;
@@ -27,28 +47,13 @@ public class Book {
 
     }
 
-    public int getIdBook() {
-        return idBook;
+
+    public int getId() {
+        return id;
     }
 
-    public void setIdBook(int idBook) {
-        this.idBook = idBook;
-    }
-
-    public Integer getIdPerson() {
-        return idPerson;
-    }
-
-    public void setIdPerson(Integer idPerson) {
-        this.idPerson = idPerson;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -73,6 +78,30 @@ public class Book {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public Date getPersonTakeDate() {
+        return personTakeDate;
+    }
+
+    public void setPersonTakeDate(Date personTakeDate) {
+        this.personTakeDate = personTakeDate;
+    }
+
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Person owner) {
+        this.owner = owner;
+    }
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
     }
 }
 

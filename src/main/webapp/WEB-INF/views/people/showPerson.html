@@ -16,21 +16,19 @@
 
 <!-- если книги есть -->
 <ul th:if="${!#lists.isEmpty(books)}">
-    <li th:each="book : ${books}">
-        <a th:href="@{/books/{id}(id=${book.idBook})}" th:text="${book.name}">Название</a>
-        <span th:text="${book.author}"></span>,
-        <span th:text="${book.year}"></span>
-    </li>
+    <li th:each="book : ${books}" th:style="${book.expired} ? 'color:red;' : ''">
+        <a th:href="@{/books/{id}(id=${book.id})}" th:text="${book.name}">Название</a>
+        <span th:text="', ' + ${book.author} + ', ' + ${book.year}"></span></li>
 </ul>
 
 <br/>
 <a href="/people">⬅ Назад к списку людей</a>
 
 <hr/>
-<form th:action="@{/people/{id}/edit(id=${person.idPerson})}">
+<form th:action="@{/people/{id}/edit(id=${person.id})}">
     <input type="submit" value="Редактировать!"/>
 </form>
-<form th:method="DELETE" th:action="@{/people/{id}/delete(id=${person.idPerson})}">
+<form th:method="DELETE" th:action="@{/people/{id}/delete(id=${person.id})}">
     <input type="submit" value="Удалить"/>
 </form>
 

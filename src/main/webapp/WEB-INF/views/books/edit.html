@@ -5,7 +5,7 @@
     <title>Изменение кинги</title>
 </head>
 <body>
-<form th:method="PATCH" th:action="@{/books/{id}(id=${book.idBook})}" th:object="${book}">
+<form th:method="PATCH" th:action="@{/books/{id}(id=${book.id})}" th:object="${book}">
     <label for="name">Название книги </label>
     <input  type="text" th:field="*{name}" placeholder="name"/>
     <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Ошибка в название книги</div>
