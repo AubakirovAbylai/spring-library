@@ -1,8 +1,6 @@
 package kz.abylai.spring.util;
 
-import kz.abylai.spring.dao.PersonDAO;
 import kz.abylai.spring.models.Person;
-import kz.abylai.spring.repositories.PersonRepository;
 import kz.abylai.spring.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
